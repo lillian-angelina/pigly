@@ -9,8 +9,11 @@ use Illuminate\Http\Request;
 class WeightLogController extends Controller
 {
     public function index() {
-        $logs = WeightLog::all();
-        return view('weight_logs.index', compact('logs'));
+        // 2023/11/19から2023/11/26までのデータを取得
+        $weightLogs = WeightLog::whereBetween('date', ['2023-11-19', '2023-11-26'])->get();
+        $weightLogs = WeightLog::orderBy('date', 'desc')->paginate(8);
+
+        return view('weight_logs.index', compact('weightLogs'));
     }
 
     public function create() {

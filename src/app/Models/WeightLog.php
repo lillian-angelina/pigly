@@ -10,7 +10,7 @@ class WeightLog extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'date', 'weight', 'calories', 'exercise_time', 'exercise_content'];
+    protected $fillable = ['date', 'weight', 'calories', 'exercise_time', 'exercise_content'];
 
     public function user()
     {
