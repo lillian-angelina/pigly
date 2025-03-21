@@ -14,6 +14,15 @@ class WeightLog extends Model
 
     public function user()
     {
+        WeightLog::create([
+            'user_id' => auth()->id(), // ログイン中のユーザーIDをセット
+            'date' => now(),
+            'weight' => 70.5,
+            'calories' => 2000,
+            'exercise_time' => '01:00:00',
+            'exercise_content' => 'Jogging',
+        ]);
+        
         return $this->belongsTo(User::class);
     }
 }

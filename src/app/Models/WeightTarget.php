@@ -12,6 +12,7 @@ class WeightTarget extends Model
 
     protected $fillable = ['user_id', 'target_weight'];
 
+    // ユーザーへの逆リレーションを設定
     public function user()
     {
         return $this->belongsTo(User::class);

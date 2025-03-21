@@ -11,7 +11,7 @@ class CreateWeightLogsTable extends Migration
     {
         Schema::create('weight_logs', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->date('date');
             $table->decimal('weight', 4, 1);
             $table->integer('calories')->nullable();
@@ -26,5 +26,9 @@ class CreateWeightLogsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('weight_logs');
+
+        Schema::table('weight_logs', function (Blueprint $table) {
+            $table->dropColumn('user_id');
+        });
     }
 }

@@ -1,4 +1,5 @@
 <!-- resources/views/weight_logs/goal_setting.blade.php -->
+
 @extends('layouts.app')
 
 @section('css')
@@ -21,7 +22,8 @@
 
             <div class="form-group">
                 <label for="goal_weight">目標体重</label>
-                <input type="number" name="goal_weight" id="goal_weight" class="form-control" value="{{ auth()->user()->weight_target }}" required>
+                <input type="number" name="goal_weight" id="goal_weight" class="form-control"
+                    value="{{ $weightTarget ? $weightTarget->target_weight : old('goal_weight') }}" required>
             </div>
 
             <button type="submit" class="btn btn-primary">更新する</button>

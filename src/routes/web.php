@@ -6,17 +6,21 @@ use App\Http\Controllers\WeightTargetController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/weight_logs', [WeightLogController::class, 'index'])->name('weight_logs.index');
-Route::get('weight_logs/create', [WeightLogController::class, 'create'])->name('weight_logs.create');
-Route::post('/weight_logs', [WeightLogController::class, 'store'])->name('weight_logs.store');
-Route::get('weight_logs/search', [WeightLogController::class, 'search'])->name('weight_logs.search');
-Route::get('/weight_logs/{weightLog}', [WeightLogController::class, 'show']);
-Route::get('/weight_logs/{weightLog}/update', [WeightLogController::class, 'edit']);
-Route::put('/weight_logs/{weightLog}', [WeightLogController::class, 'update']);
-Route::delete('/weight_logs/{weightLog}', [WeightLogController::class, 'destroy']);
+Route::prefix('weight_logs')->group(function () {
+    Route::get('/', [WeightLogController::class, 'index'])->name('weight_logs.index');
+    Route::get('create', [WeightLogController::class, 'create'])->name('weight_logs.create');
+    Route::post('/', [WeightLogController::class, 'store'])->name('weight_logs.store');
+    Route::get('search', [WeightLogController::class, 'search'])->name('weight_logs.search');
+    Route::post('search', [WeightLogController::class, 'search'])->name('weight_logs.search');
+    Route::get('{weightLog}', [WeightLogController::class, 'show']);
+    Route::get('{weightLog}/update', [WeightLogController::class, 'edit']);
+    Route::put('{weightLog}', [WeightLogController::class, 'update']);
+    Route::delete('{weightLog}', [WeightLogController::class, 'destroy']);
 
-Route::get('/wight_logs/goal_setting', [WeightTargetController::class, 'edit'])->name('weight_logs.goal_setting');
-Route::put('/wight_logs/goal_setting', [WeightTargetController::class, 'update'])->name('weight_logs.update');
+    Route::get('goal_setting', [WeightTargetController::class, 'goal_setting'])->name('weight_logs.goal_setting');
+    Route::get('edit', [WeightTargetController::class, 'edit'])->name('weight_logs.edit');
+    Route::put('goal_setting', [WeightTargetController::class, 'update'])->name('weight_logs.update');
+});
 
 Route::get('/register/step1', [AuthController::class, 'showRegistrationForm']);
 Route::post('/register/step1', [AuthController::class, 'register']);

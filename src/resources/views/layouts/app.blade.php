@@ -16,12 +16,12 @@
     <header class="header">
         <a class="header-a" href="{{ route('weight_logs.index') }}">PiGLy</a>
         <div class="header-frame">
-            <div class="header-frame_setting">
+            <form class="header-frame_setting" action="{{ route('weight_logs.goal_setting') }}" method="GET">
+                @csrf
                 <!-- 歯車アイコンの追加 -->
                 <i class="fas fa-cog"></i>
-                <a class="header-frame_setting-btn" href="{{ route('weight_logs.goal_setting') }}"
-                    class="btn btn-primary">目標体重設定</a>
-            </div>
+                <a class="header-frame_setting-btn" href="{{ route('weight_logs.goal_setting') }}">目標体重設定</a>
+            </form>
             <div class="header-frame_logout">
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: inline;">
                     @csrf
@@ -32,7 +32,7 @@
         </div>
     </header>
 
-
+@yield('js')
 
     <main>
         @yield('content')

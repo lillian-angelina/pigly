@@ -18,8 +18,8 @@ class User extends Authenticatable
         return $this->hasMany(WeightLog::class);
     }
 
-    public function weightTarget()
+    public function weightTargets()
     {
-        return $this->hasOne(WeightTarget::class);
+        return $this->hasOne(WeightTarget::class); // 1対1のリレーション
     }
 }
