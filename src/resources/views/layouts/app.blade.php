@@ -32,14 +32,18 @@
         </div>
     </header>
 
-@yield('js')
+
 
     <main>
         @yield('content')
+
+        
     </main>
     <footer>
 
     </footer>
+    @yield('modal-content') {{-- 追加 --}}
+    @yield('js')
 </body>
 
 </html>

@@ -17,7 +17,10 @@ Route::prefix('weight_logs')->group(function () {
     Route::put('{weightLog}', [WeightLogController::class, 'update']);
     Route::delete('{weightLog}', [WeightLogController::class, 'destroy']);
 
-    Route::get('goal_setting', [WeightTargetController::class, 'goal_setting'])->name('weight_logs.goal_setting');
+    Route::get('goal_setting', [WeightTargetController::class, 'goal_setting'])
+        ->middleware('guest.access') // ここでミドルウェアを適用
+        ->name('weight_logs.goal_setting');
+
     Route::get('edit', [WeightTargetController::class, 'edit'])->name('weight_logs.edit');
     Route::put('goal_setting', [WeightTargetController::class, 'update'])->name('weight_logs.update');
 });

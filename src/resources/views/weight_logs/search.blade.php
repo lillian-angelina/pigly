@@ -1,8 +1,7 @@
-<!-- weight_logs/search.blade.php -->
 @extends('layouts.app')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/index.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/search.css') }}">
 @endsection
 
 @section('content')
@@ -15,7 +14,7 @@
             <div class="separator"></div>
             <div class="weight-item">
                 <p class="label">目標まで</p>
-                <spanpp class="value">-1.5<span class="kg">kg</span></spanpp>
+                <span class="value">-1.5<span class="kg">kg</span></span>
             </div>
             <div class="separator"></div>
             <div class="weight-item">
@@ -26,21 +25,28 @@
         <div class="content_block-double">
             <div class="content_block-2">
                 <div class="content_block--item4">
-
                     <!-- 日付入力フォーム -->
                     <div class="date-range">
-                        <input class="date-range_start" type="date" id="start_date" name="start_date"> ~
-                        <input class="date-range_end" type="date" id="end_date" name="end_date">
-                        <!-- 検索ボタン -->
                         <form class="search" method="GET" action="{{ route('weight_logs.search') }}">
                             @csrf
-                            <button class="search-btn">検索</button>
-                            <!-- データ追加ボタン -->
-                            <button class="add-data-btn">データ追加</button>
+                            <input class="date-range_start" type="date" id="start_date" name="start_date"
+                                value="{{ request('start_date') }}"> ~
+                            <input class="date-range_end" type="date" id="end_date" name="end_date"
+                                value="{{ request('end_date') }}">
+                            <button class="search-btn" type="submit">検索</button>
+
                         </form>
+                        <button class="add-data-btn" id="openModal">データ追加</button>
                     </div>
                 </div>
+                <p class="search-result">
+                    {{ $startDateFormatted }}～{{ $endDateFormatted }} の検索結果
+                    <span>{{ $weightLogs->total() }}件</span>
+                </p>
+
             </div>
+
+            <!-- 検索結果のテーブル -->
             <div class="content_block-3">
                 <table class="table">
                     <thead>
@@ -49,11 +55,11 @@
                             <th>体重</th>
                             <th>食事摂取カロリー</th>
                             <th>運動時間</th>
-                            <th class="table_th--end">編集</thclass>
+                            <th class="table_th--end">編集</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($weightLogs as $log)
+                        @forelse ($weightLogs as $log)
                             <tr class="table_tr">
                                 <td class="table_td--first">{{ $log->date }}</td>
                                 <td class="table_td">{{ $log->weight }}kg</td>
@@ -61,19 +67,32 @@
                                 <td class="table_td">{{ $log->exercise_time }}</td>
                                 <td class="table_td"><i class="fas fa-pen"></i></td>
                             </tr>
-                        @endforeach
-
+                        @empty
+                            <tr>
+                                <td colspan="5" class="table_td">該当するデータがありません</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                 </table>
             </div>
             <div class="content_block-4">
-                <!-- ページネーション -->
                 <div class="pagination">
-                    <a href="#" class="prev">&lt;</a>
-                    <a href="#" class="page-number">1</a>
-                    <a href="#" class="page-number">2</a>
-                    <a href="#" class="page-number">3</a>
-                    <a href="#" class="next">&gt;</a>
+                    @if ($weightLogs->onFirstPage())
+                        <span class="prev disabled">&lt;</span>
+                    @else
+                        <a href="{{ $weightLogs->previousPageUrl() }}" class="prev">&lt;</a>
+                    @endif
+
+                    @foreach ($weightLogs->getUrlRange(1, $weightLogs->lastPage()) as $page => $url)
+                                <a href="{{ $url }}" class="page-number {{ $page == $weightLogs->currentPage() ? 'active' : '' }}">{{
+                        $page }}</a>
+                    @endforeach
+
+                    @if ($weightLogs->hasMorePages())
+                        <a href="{{ $weightLogs->nextPageUrl() }}" class="next">&gt;</a>
+                    @else
+                        <span class="next disabled">&gt;</span>
+                    @endif
                 </div>
             </div>
         </div>

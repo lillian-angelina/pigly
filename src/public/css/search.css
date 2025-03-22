@@ -1,0 +1,367 @@
+main {
+    width: 100%;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+}
+
+.content {
+    height: auto;
+    padding: 70px 196px;
+}
+
+.content_block-1 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 10px;
+    padding: 30px;
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    color: #333;
+    background: #FFFFFF;
+    width: 100%;
+}
+
+.kg {
+    font-size: 16px;
+    font-family: Hiragino Kaku Gothic Pro;
+    font-weight: 300;
+    margin-left: 10px;
+}
+
+.weight-item .label {
+    font-weight: bold;
+}
+
+.value {
+    font-size: 40px;
+    color: #333333; /* 最新体重の値に目立つ色を付ける */
+    text-align: center;
+}
+
+.date-range {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-align: left;
+    background-color: #FFFFFF;
+    width: 100%;
+}
+
+.search {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    gap: 10px;
+}
+
+.search-btn {
+    width: 100px;
+    height: 43px;
+    padding: 9.5px 10px;
+    border-radius: 5px;
+    border: 1px solid #E0DFDE;
+    color: #919191;
+    font-size: 16px;
+    font-weight: 300;
+    cursor: pointer;
+}
+
+.search-result {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    color: #333;
+    background: #FFFFFF;
+    border-radius: 10px;
+}
+
+.add-data-btn {
+    width: 160px;
+    padding: 7.5px 10px;
+    border-radius: 12px;
+    border: 1px solid #E0DFDE;
+    color: #FFFFFF;
+    text-align: center;
+    text-decoration: none;
+    font-size: 20px;
+    font-weight: 600;
+    background: linear-gradient(90deg, #A3A6E1 0%, #FFABD9 100%);
+    cursor: pointer;
+}
+
+.date-range_start, .date-range_end {
+    width: 220px;
+    height: 20px;
+    font-size: 14px;
+    padding: 11px 10px;
+    border-radius: 5px;
+    border: 1px solid #E0DFDE;
+    color: #CDCDCD;
+    margin: 0;
+}
+
+.separator {
+    display: flex;
+    align-items: center;
+    height: 70px;
+    border-right: 1px solid#CDCDCD;
+}
+
+.content_block-double {  /*  content_block 2~4  */
+    width: 100%;
+    height: 715px;
+    border-radius: 10px;
+    padding: 30px;
+    background: #FFFFFF;
+    margin-top: 30px;
+}
+
+.content_block-2 {
+    gap: 30px;
+    padding: 30px 0;
+}
+
+.content_block--item4 {
+    display: flex;
+    border-radius: 10px;
+}
+
+.content_block-3 {
+    width: 100%;
+    height: auto;
+}
+
+.content_block-2, .content_block-3 {
+    background: #FFFFFF;
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+}
+
+.table_tr--head {
+    position: relative;
+  }
+
+  .table_tr--head::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px; /* ボーダーの太さ */
+    background: linear-gradient(90deg, #A3A6E1 0%, #FFABD9 100%);
+}
+
+.table_th {
+    text-align: left;
+    padding: 18px 40px;
+    font-size: 16px;
+    color: #333;
+}
+
+.table_th--end {
+    display: none;
+}
+
+.table_td--first {
+    border: 1px solid #F7F7F7;
+    padding: 18px 40px;
+    text-align: left;
+    font-size: 16px;
+    border-left: none;
+    border-right: none;
+}
+
+.table_td {
+    border: 1px solid #F7F7F7;
+    padding: 12px 15px;
+    text-align: center;
+    font-size: 16px;
+    border-left: none;
+    border-right: none;
+}
+
+.table_tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.table_tr:hover {
+    background-color: #ddd;
+}
+
+.fas.fa-pen {
+    cursor: pointer;
+    background: linear-gradient(90deg, #A3A6E1 0%, #FFABD9 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.fas.fa-pen:hover {
+    background: linear-gradient(90deg, #FFABD9 0%, #A3A6E1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.content_block-4 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.pagination {
+    display: flex;
+    gap: 10px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+}
+
+.pagination a {
+    padding: 10px 15px;
+    text-decoration: none;
+    color: #333;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.pagination a:hover {
+    background-color: #ddd;
+}
+
+.pagination a.active {
+    background: linear-gradient(90deg, #A3A6E1 0%, #FFABD9 100%);
+    color: white;
+    font-weight: bold;
+    border: none;
+}
+
+.pagination .prev, .pagination .next {
+    font-weight: bold;
+    padding: 10px 15px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.modal {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* モーダルを開いたとき */
+.modal.show {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* モーダルの中身を.formと統一 */
+.modal-content {
+    width: 800px;
+    background: white;
+    padding: 30px 20px;
+    border-radius: 8px;
+    text-align: left;
+    position: relative;
+    box-shadow: 0px 4px 10px 0px #0000001A;
+    transform: scale(0.9); /* 縮小 */
+}
+
+/* 閉じるボタン */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* フォームのタイトル */
+.modal-content .form-title {
+    font-size: 24px;
+    font-weight: 600;
+    font-family: "Hiragino Kaku Gothic Pro", sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #333333;
+}
+
+/* 入力フィールド */
+.modal-content .form_input,
+.modal-content .form_input-weight {
+    width: 760px;
+    height: 43px;
+    padding: 11px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 300;
+    border: 1px solid #E0DFDE;
+}
+
+.form_input-calories,
+.form_input-textarea {
+    width: 730px;
+    height: 40px;
+    padding: 11px 10px;
+    border-radius: 5px;
+    font-size: 14px;
+    font-weight: 300;
+    border: 1px solid #E0DFDE;
+}
+
+/* テキストエリア（リサイズ無効） */
+.modal-content .form_input-textarea {
+    height: 130px;
+    resize: none;
+}
+
+/* ボタン */
+.modal-content .form_btn,
+.modal-content .form_submit {
+    font-family: "Hiragino Kaku Gothic Pro", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: #333333;
+    width: 200px;
+    height: 50px;
+    padding: 13px 10px;
+    border-radius: 12px;
+    box-shadow: 0px 4px 10px 0px #0000001A;
+    border: none;
+    margin: 0 10px;
+}
+
+.modal-content .form_submit {
+    background: linear-gradient(90deg, #A3A6E1 0%, #FFABD9 100%);
+    color: #FFFFFF;
+}
+
+/* 必須ラベル */
+.modal-content .required {
+    width: 34px;
+    height: 18px;
+    padding-right: 5px;
+    padding-left: 5px;
+    margin-left: 10px;
+    border-radius: 3px;
+    font-family: "Hiragino Kaku Gothic Pro", sans-serif;
+    font-weight: 300;
+    font-size: 12px;
+    background: #F65A5A;
+    color: #FFFFFF;
+}

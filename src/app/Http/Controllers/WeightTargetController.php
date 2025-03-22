@@ -4,24 +4,18 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Contracts\View\View;
-use App\Http\Requests\UpdateGoalWeightRequest; 
+use App\Http\Requests\UpdateGoalWeightRequest;
 
 class WeightTargetController extends Controller
 {
     // 目標体重設定フォーム表示
-    public function goalSetting(): RedirectResponse|View
+    public function goal_setting()
     {
-        // ログインしているユーザーを取得
+        // ユーザーがログインしている場合のみデータを取得
         $user = auth()->user();
-    
-        if (!$user) {
-            return redirect()->route('login')->with('error', 'ログインしてください');
-        }
-    
-        // ユーザーに関連する目標体重を取得
-        $weightTarget = $user->weightTarget;  // もし weight_target が存在しない場合は null になります
-    
-        return view('weight_logs.goal_setting', compact('weightTarget'));
+    $weightTarget = $user ? $user->weightTarget : null;
+
+    return view('weight_logs.goal_setting', compact('weightTarget'));
     }
 
     // 目標体重設定フォーム表示
@@ -29,14 +23,14 @@ class WeightTargetController extends Controller
     {
         // ログインしているユーザーを取得
         $user = auth()->user();
-    
+
         if (!$user) {
             return redirect()->route('login')->with('error', 'ログインしてください');
         }
-    
+
         // ユーザーに関連する目標体重を取得
         $weightTarget = $user->weightTarget;  // もし weight_target が存在しない場合は null になります
-    
+
         return view('weight_logs.goal_setting', compact('weightTarget'));  // 目標体重をビューに渡す
     }
 

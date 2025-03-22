@@ -13,8 +13,7 @@ class WeightLogRequest extends FormRequest
      */
     public function authorize()
     {
-        // 現在のユーザーがこのリクエストを実行できるか確認
-        return true; // ここで認証チェックを追加したい場合は適切な条件を設定
+        return true; // 認証が不要な場合はtrue。必要に応じて認証条件を追加
     }
 
     /**
@@ -25,10 +24,11 @@ class WeightLogRequest extends FormRequest
     public function rules()
     {
         return [
-            'weight' => 'required|numeric|min:0', // 体重は必須かつ0以上の数値
-            'calories' => 'nullable|numeric', // カロリーは任意、数値
-            'exercise_time' => 'nullable|date_format:H:i:s', // 時間形式（H:i:s）
-            'exercise_content' => 'nullable|string', // 運動内容は任意、文字列
+            'date' => 'required|date', // 日付は必須で、正しい日付形式である必要がある
+            'weight' => 'required|numeric|digits_between:1,4|regex:/^\d+(\.\d{1})?$/', // 体重は必須、数値、4桁以内、小数点1桁
+            'calories' => 'required|numeric', // カロリーは必須、数値
+            'exercise_time' => 'required|numeric', // 運動時間は必須、数値
+            'exercise_content' => 'max:120', // 運動内容は120文字以内
         ];
     }
 
@@ -40,12 +40,17 @@ class WeightLogRequest extends FormRequest
     public function messages()
     {
         return [
-            'weight.required' => '体重は必須です。',
-            'weight.numeric' => '体重は数値で入力してください。',
-            'weight.min' => '体重は0以上でなければなりません。',
-            'calories.numeric' => 'カロリーは数値で入力してください。',
-            'exercise_time.date_format' => '運動時間はH:i:sの形式で入力してください。',
-            'exercise_content.string' => '運動内容は文字列で入力してください。',
+            'date.required' => '日付を入力してください',
+            'date.date' => '日付が正しくありません',
+            'weight.required' => '体重を入力してください',
+            'weight.numeric' => '数字で入力してください',
+            'weight.digits_between' => '4桁までの数字で入力してください',
+            'weight.regex' => '小数点は1桁で入力してください',
+            'calories.required' => '摂取カロリーを入力してください',
+            'calories.numeric' => '数字で入力してください',
+            'exercise_time.required' => '運動時間を入力してください',
+            'exercise_time.numeric' => '運動時間は数字で入力してください',
+            'exercise_content.max' => '120文字以内で入力してください',
         ];
     }
 }

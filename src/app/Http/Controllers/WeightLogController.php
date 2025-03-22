@@ -7,6 +7,7 @@ use App\Models\WeightLog;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use App\Http\Requests\WeightLogRequest;
+use Carbon\Carbon;
 
 class WeightLogController extends Controller
 {
@@ -26,51 +27,46 @@ class WeightLogController extends Controller
 
     public function store(WeightLogRequest $request)
     {
-        // バリデーションを追加
         $validated = $request->validate([
-            'weight' => 'required|numeric|min:0', // weightが必須かつ0以上の数字
-            'calories' => 'nullable|numeric',
-            'exercise_time' => 'nullable|date_format:H:i:s',
+            'date' => 'required|date',
+            'weight' => 'required|numeric',
+            'calories' => 'required|numeric',
+            'exercise_time' => 'required|integer',
             'exercise_content' => 'nullable|string',
         ]);
 
-        // バリデーションを通過した後にデータを挿入
-        DB::table('weight_logs')->insert([
-            'user_id' => auth()->id(),
-            'date' => now()->toDateString(),
-            'weight' => $request->validated()['weight'],
-            'calories' => $request->validated()['calories'],
-            'exercise_time' => $request->validated()['exercise_time'],
-            'exercise_content' => $request->validated()['exercise_content'],
-            'created_at' => now(),
-            'updated_at' => now(),
-        ]);
+        WeightLog::create($validated);
 
-        return redirect()->back()->with('success', '記録が追加されました！');
+        return response()->json([
+            'message' => '登録が完了しました',
+        ]);
     }
 
     public function search(Request $request)
     {
-        // バリデーション（オプションで必要なら追加）
-        $request->validate([
-            'start_date' => 'nullable|date',
-            'end_date' => 'nullable|date|after_or_equal:start_date', // start_dateより後であることを確認
-        ]);
+        // フォームの入力値を取得
+        $startDate = $request->input('start_date');
+        $endDate = $request->input('end_date');
 
-        // 開始日と終了日が指定されていれば、該当するデータを取得
-        $weightLogs = WeightLog::query()
-            ->where('user_id', auth()->id())
-            ->when($request->start_date, function ($query) use ($request) {
-                return $query->where('date', '>=', $request->start_date);
-            })
-            ->when($request->end_date, function ($query) use ($request) {
-                return $query->where('date', '<=', $request->end_date);
-            })
-            ->orderBy('date', 'desc') // 日付順で並べる
-            ->paginate(8);
+        $query = WeightLog::query();
 
-        // ビューにデータを渡す
-        return view('weight_logs.index', compact('weightLogs'));
+        if ($startDate) {
+            $query->where('date', '>=', $startDate);
+            $startDateFormatted = Carbon::parse($startDate)->format('Y年m月d日'); // 日本語形式に変換
+        } else {
+            $startDateFormatted = '指定なし';
+        }
+
+        if ($endDate) {
+            $query->where('date', '<=', $endDate);
+            $endDateFormatted = Carbon::parse($endDate)->format('Y年m月d日');
+        } else {
+            $endDateFormatted = '指定なし';
+        }
+
+        $weightLogs = $query->orderBy('date', 'desc')->paginate(10);
+
+        return view('weight_logs.search', compact('weightLogs', 'startDateFormatted', 'endDateFormatted'));
     }
 
     public function show(WeightLog $weightLog)

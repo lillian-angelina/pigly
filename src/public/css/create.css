@@ -1,0 +1,109 @@
+body {
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    background: #FFFFFF;
+    transform: scale(0.9); /* 縮小 */
+}
+
+.form {
+    width: 800px;
+    height: 90%;
+    margin: 0;
+    padding: 30px 20px;
+}
+
+.form-title {
+    font-size: 24px;
+    font-weight: 600;
+    font-family: Hiragino Kaku Gothic Pro;
+    margin: 0;
+    padding: 0;
+    color: #333333;
+}
+
+.form-date {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.form_label {
+    font-family: Hiragino Kaku Gothic Pro;
+    font-weight: 300;
+    font-size: 16px;
+    color: #333333;
+}
+
+.form-date_input {
+    display: flex;
+    align-items: flex-end;
+    margin: 0;
+}
+
+.kg, .cal {
+    padding: 0 10px;
+    margin-left: 10px;
+}
+
+.form-date_input,
+.form-date_label {
+    width: 100%;
+}
+
+.form-date_input {
+    padding: 10px 0 30px 0;
+}
+
+.form_input {
+    width: 760px;
+    height: 43px;
+    padding: 11px 10px;
+    border-radius: 5px;
+    border-width: 1px;
+    font-size: 14px;
+    font-weight: 300;
+    border: 1px solid #E0DFDE
+}
+
+.form_input-weight {
+    width: 730px;
+    height: 43px;
+    padding: 11px 10px;
+    border-radius: 5px;
+    border-width: 1px;
+    font-size: 14px;
+    font-weight: 300;
+    border: 1px solid #E0DFDE
+}
+
+.form-date_submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 760px;
+    height: 50px;
+}
+
+.form_submit {
+    background: linear-gradient(90deg, #A3A6E1 0%, #FFABD9 100%);
+    color: #FFFFFF;
+}
+
+.required {
+    width: 34px;
+    height: 18px;
+    padding-right: 5px;
+    padding-left: 5px;
+    margin-left: 10px;
+    border-radius: 3px;
+    font-family: Hiragino Kaku Gothic Pro;
+    font-weight: 300;
+    font-size: 12px;
+    background: #F65A5A;
+    color: #FFFFFF;
+}
+
+.text-danger {
+    color: red;
+}

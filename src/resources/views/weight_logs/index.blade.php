@@ -99,62 +99,115 @@
             </div>
         </div>
     </div>
-@endsection
 
-@section('js')
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const modal = document.getElementById("modal");
-            const openModalBtn = document.getElementById("openModal");
-            const modalBody = document.getElementById("modal-body");
 
-            // 初期状態はモーダルを非表示
-            modal.style.display = "none";
+    @section('js')
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const modal = document.getElementById("modal");
+                const openModalBtn = document.getElementById("openModal");
+                const modalBody = document.getElementById("modal-body");
 
-            // 「データ追加」ボタンを押したときの処理
-            openModalBtn.addEventListener("click", function (event) {
-                event.preventDefault(); // ページ遷移を防ぐ
+                // **モーダルを開く処理**
+                if (openModalBtn) {
+                    openModalBtn.addEventListener("click", function (event) {
+                        event.preventDefault();
 
-                fetch("{{ route('weight_logs.create') }}")
-                    .then(response => response.text())
-                    .then(html => {
-                        modalBody.innerHTML = html; // モーダル内に取得したHTMLを挿入
-                        modal.style.display = "flex"; // モーダルを表示
-                        attachCloseEvent(); // 閉じるイベントを設定
-                    })
-                    .catch(error => console.error("Error loading modal content:", error));
-            });
+                        fetch("{{ route('weight_logs.create') }}")
+                            .then(response => response.text())
+                            .then(html => {
+                                modalBody.innerHTML = html;
+                                modal.classList.add("show");
 
-            // モーダルを閉じる処理
-            function closeModal() {
-                modal.style.display = "none";
-                modalBody.innerHTML = ""; // モーダルの内容をリセット
-            }
-
-            // 閉じるボタンや背景クリックでモーダルを閉じる処理
-            function attachCloseEvent() {
-                setTimeout(() => {
-                    const closeBtn = document.querySelector(".close-btn"); // 再取得
-                    const cancelBtn = document.querySelector("#cancel-btn"); // キャンセルボタン
-
-                    if (closeBtn) {
-                        closeBtn.addEventListener("click", closeModal);
-                    }
-
-                    if (cancelBtn) {
-                        cancelBtn.addEventListener("click", closeModal);
-                    }
-
-                    // モーダル外をクリックしたら閉じる
-                    modal.addEventListener("click", function (event) {
-                        if (event.target === modal) {
-                            closeModal();
-                        }
+                                // **モーダルのフォームにイベントを追加**
+                                setTimeout(() => {
+                                    attachFormSubmitEvent(); // フォーム送信処理を追加
+                                }, 300);
+                            })
+                            .catch(error => console.error("Error loading modal content:", error));
                     });
-                }, 300); // 少し遅延させて確実に要素を取得
-            }
-        });
-    </script>
+                } else {
+                    console.warn('openModal button not found!');
+                }
 
+                // **モーダルを閉じる処理**
+                function closeModal() {
+                    console.log("Closing modal...");
+                    modal.classList.remove("show");
+                    setTimeout(() => {
+                        modalBody.innerHTML = ""; // モーダルの内容をリセット
+                    }, 300);
+                }
+
+                modal.addEventListener("click", function (event) {
+                    if (event.target === modal) {
+                        closeModal();
+                    }
+                });
+
+                document.addEventListener("click", function (event) {
+                    if (event.target.classList.contains("close-btn")) {
+                        closeModal();
+                    }
+                });
+
+                // **フォーム送信処理をモーダル内に適用**
+                function attachFormSubmitEvent() {
+                    const weightLogForm = document.getElementById('weightLogForm');
+                    if (!weightLogForm) {
+                        console.warn("weightLogForm not found! Skipping event attachment.");
+                        return;
+                    }
+
+                    weightLogForm.addEventListener('submit', function (e) {
+                        e.preventDefault();
+                        let formData = new FormData(this);
+                        let submitButton = document.getElementById('submitBtn');
+
+                        submitButton.disabled = true;
+
+                        fetch("{{ route('weight_logs.store') }}", {
+                            method: 'POST',
+                            body: formData,
+                        })
+                            .then(response => response.json())
+                            .then(data => {
+                                console.log(data);
+
+                                if (data.errors) {
+                                    if (data.errors.date) {
+                                        document.getElementById('date-error').innerText = data.errors.date[0];
+                                    }
+                                    if (data.errors.weight) {
+                                        document.getElementById('weight-error').innerText = data.errors.weight[0];
+                                    }
+                                    if (data.errors.calories) {
+                                        document.getElementById('calories-error').innerText = data.errors.calories[0];
+                                    }
+                                    if (data.errors.exercise_time) {
+                                        document.getElementById('exercise_time-error').innerText = data.errors.exercise_time[0];
+                                    }
+                                    if (data.errors.exercise_content) {
+                                        document.getElementById('exercise_content-error').innerText = data.errors.exercise_content[0];
+                                    }
+                                } else {
+                                    alert('登録が完了しました');
+                                    location.reload();
+                                }
+
+                                submitButton.disabled = false;
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                submitButton.disabled = false;
+                            });
+                    });
+                }
+            });
+        </script>
+
+
+
+    @endsection
 
 @endsection
